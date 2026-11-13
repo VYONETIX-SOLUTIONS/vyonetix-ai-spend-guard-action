@@ -1,0 +1,23 @@
+name: AI workload budget estimate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  estimate:
+    # Fork pull requests are skipped. Same-repository pull requests must come
+    # from contributors trusted to access the RAPIDAPI_KEY repository secret.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Estimate monthly model cost
+        uses: VYONETIX-SOLUTIONS/vyonetix-ai-spend-guard-action@v0.1.0-preview.1
+        with:
+          rapidapi-key: ${{ secrets.RAPIDAPI_KEY }}
+          workload-config: .github/ai-spend-guard/workload.json

@@ -1,0 +1,17 @@
+name: Validate budget gate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run standard-library test suite
+        run: python3 -m unittest discover -s tests -v

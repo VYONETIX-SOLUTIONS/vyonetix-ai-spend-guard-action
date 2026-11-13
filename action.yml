@@ -1,0 +1,33 @@
+name: Vyonetix AI Spend Guard Budget Gate
+description: Estimate monthly text-inference cost in CI and fail when it exceeds a caller-defined budget.
+author: VYONETIX-SOLUTIONS
+inputs:
+  rapidapi-key:
+    description: RapidAPI consumer key for Vyonetix AI Spend Guard.
+    required: true
+  workload-config:
+    description: Path to a JSON file in the checked-out repository containing model, token, monthly volume, and budget inputs.
+    required: true
+outputs:
+  estimated-monthly-cost-usd:
+    description: Estimated monthly USD cost from the API's current supported catalog rate.
+    value: ${{ steps.estimate.outputs.estimated-monthly-cost-usd }}
+  within-budget:
+    description: Whether the estimate is less than or equal to monthly-budget-usd.
+    value: ${{ steps.estimate.outputs.within-budget }}
+  source-retrieved-at:
+    description: Source catalog retrieval timestamp returned with the estimate.
+    value: ${{ steps.estimate.outputs.source-retrieved-at }}
+  source-record-updated-at:
+    description: Selected model rate record update date from the source catalog, when supplied.
+    value: ${{ steps.estimate.outputs.source-record-updated-at }}
+runs:
+  using: composite
+  steps:
+    - id: estimate
+      shell: bash
+      env:
+        RAPIDAPI_KEY: ${{ inputs.rapidapi-key }}
+        WORKLOAD_CONFIG: ${{ inputs.workload-config }}
+        GITHUB_WORKSPACE: ${{ github.workspace }}
+      run: python3 "$GITHUB_ACTION_PATH/ci_budget_gate.py"
