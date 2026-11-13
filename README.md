@@ -2,7 +2,7 @@
 
 Estimate monthly text-inference cost in GitHub Actions before merging a workload change. The action sends a model ID and caller-supplied token/request-volume assumptions to the Vyonetix AI Spend Guard API, reports the estimate and source dates, and fails the job when the configured budget is exceeded.
 
-**Release status: preview.** Version `v0.1.0-preview.1` is a technical preview. As of 13 November 2026, Vyonetix has not independently verified the AI Spend Guard estimate route through a distinct RapidAPI consumer. Do not make this a required branch-protection check until that consumer-path test succeeds in your own repository.
+**Release status: preview.** Version `v0.1.0-preview.2` is a technical preview. As of 13 November 2026, Vyonetix has not independently verified the AI Spend Guard estimate route through a distinct RapidAPI consumer. Do not make this a required branch-protection check until that consumer-path test succeeds in your own repository.
 
 ## What it does
 
@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Estimate monthly model cost
-        uses: VYONETIX-SOLUTIONS/vyonetix-ai-spend-guard-action@v0.1.0-preview.1
+        uses: VYONETIX-SOLUTIONS/vyonetix-ai-spend-guard-action@v0.1.0-preview.2
         with:
           rapidapi-key: ${{ secrets.RAPIDAPI_KEY }}
           workload-config: .github/ai-spend-guard/workload.json

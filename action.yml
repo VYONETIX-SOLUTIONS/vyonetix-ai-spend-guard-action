@@ -1,6 +1,9 @@
 name: Vyonetix AI Spend Guard Budget Gate
 description: Estimate monthly text-inference cost in CI and fail when it exceeds a caller-defined budget.
 author: VYONETIX-SOLUTIONS
+branding:
+  icon: dollar-sign
+  color: blue
 inputs:
   rapidapi-key:
     description: RapidAPI consumer key for Vyonetix AI Spend Guard.
